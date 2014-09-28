@@ -1,6 +1,6 @@
 <?php
 
-
+require_once('../includes/helper.php');
 require_once('../model/model.php');
 
 $username = '';
@@ -72,23 +72,16 @@ if (isset($_POST['username'],
 }
 
 
+// Prevent CSRF and resubmit
 $form_token = md5(rand(time(), true));
 $_SESSION['form_token'] = $form_token;
 
-?>
-<form action='' method='post'>
-    <input type='hidden' name='form_token' value='<?php echo $form_token; ?>'>
-    username
-    <input type='text' name='username' value='<?php echo !empty($username) ? $username : '' ?>'>
-    <br />
-    email
-    <input type='text' name='email' value='<?php echo !empty($email) ? $email : '' ?>'>
-    <br />
-    password
-    <input type='password' name='password'>
-    <br />
-    verify password
-    <input type='password' name='verify'>
-    <br />
-    <input type='submit' value='Register'>
-</form>
+// Remember user inputs (username, email) and send token
+$template_values = array(
+    'username' => $username,
+    'email' => $email,
+    'form_token' => $form_token
+);
+
+render('register', $template_values);
+

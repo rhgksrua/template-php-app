@@ -1,10 +1,13 @@
 <?php
 
-$errors = array();
+require_once('../includes/helper.php');
+
 
 if (isset($_POST['username'],
           $_POST['password'],
           $_POST['verify'])) {
+
+    $errors = array();
 
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -42,6 +45,8 @@ if (isset($_POST['username'],
     }
 }
 
+echo "hello";
+render('test');
 
 
 ?>
