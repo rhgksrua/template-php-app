@@ -1,13 +1,19 @@
 <?php
 
-if (!isset($_SESSION['id'], $_SESSION['username'])) {
+require_once("../includes/helper.php");
+
+if (!isset($_SESSION['user'])) {
 
     header("Location: /?page=register");
     exit();
 }
 
-?>
 
-<p>ID: <?= $_SESSION['id'] ?>, WELCOME <?= $_SESSION['username'] ?></p>
+render("home", array('user' => $_SESSION['user']));
+exit();
 
 
+
+
+
+// END

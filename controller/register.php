@@ -3,6 +3,9 @@
 require_once('../includes/helper.php');
 require_once('../model/model.php');
 
+// Logged in users cannot register unless logged out
+logged_in();
+
 $username = '';
 $email = '';
 $errors = array();
@@ -61,17 +64,13 @@ if (isset($_POST['username'],
     // Check errors
     if (empty($errors)) {
         // Check DB for existing username and email
-        $user_id = add_user($username, $email, $password); 
+        $user = add_user($username, $email, $password); 
 
-        echo "user id: ";
-        print_r($user_id);
-
-        if ($user_id == FALSE) {
+        if ($user == FALSE) {
             echo "Failed to add user";
             exit();
         } else { 
-            $_SESSION['id'] = $user_id;
-            $_SESSION['username'] = $username;
+            $_SESSION['user'] = $user;
             header("Location: /?page=home");
             exit();
         }

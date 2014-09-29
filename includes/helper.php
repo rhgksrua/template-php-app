@@ -12,3 +12,10 @@ function render($template, $data = array())
     }
 }
 
+function logged_in() {
+    if (isset($_SESSION['user']) AND count($_SESSION['user']) == 4) {
+        header("Location: /");
+        exit();
+    }
+    return FALSE;
+}

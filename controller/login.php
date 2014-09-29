@@ -3,6 +3,9 @@
 require_once('../includes/helper.php');
 require_once('../model/model.php');
 
+// Logged in user cannot access login page
+logged_in();
+
 $username = '';
 $errors = array();
 
@@ -31,12 +34,10 @@ if (isset($_POST['username'],
     }
 
     if (empty($errors)) {
-        $user_id = get_user($username, $password);
-        echo "getuser";
-        print_r($user_id);
-        if ($user_id != FALSE) {
-            $_SESSION['id'] = $user_id;
-            $_SESSION['username'] = $username;
+        $user = get_user($username, $password);
+        print_r($user);
+        if ($user != FALSE) {
+            $_SESSION['user'] = $user;
             header("Location: /?page=home");
             exit();
         } else {

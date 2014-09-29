@@ -46,6 +46,8 @@ render('header', $header_values);
     </form>
 </div>
 
+<p><a href="/?page=login">LOGIN</a></p>
+
 <?php
 
 render('footer');
