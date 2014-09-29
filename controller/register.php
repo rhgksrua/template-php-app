@@ -37,12 +37,16 @@ if (isset($_POST['username'],
         $errors['username'] = "Username must be at least 6 characters";
     } else if (preg_match('/^[a-z0-9][a-z0-9_-]{5,32}$/', $username) == 0) {
         $errors['username'] = "Invalid username";
+    } else if (check_username($username) == FALSE) {
+        $errors['username'] = "Username exists";
     }
 
     // Check email
     if (empty($email)) {
         // Empty email
         $errors['email'] = "Please enter an email";
+    } else if (check_email($email) == FALSE) {
+        $errors['email'] = "Email exists";
     }
 
     // Check password
@@ -65,21 +69,11 @@ if (isset($_POST['username'],
         if ($user_id == FALSE) {
             echo "Failed to add user";
             exit();
-        } 
-        if (isset($user_id['username']) && $user_id['username'] == TRUE) {
-            $errors['username'] = "username exists";
-        } 
-        if (isset($user_id['email']) && $user_id['email'] == TRUE) {
-            $errors['email'] = "email exists";
-        }
-
-        if (empty($errors)) {
-                $_SESSION['id'] = $user_id;
-                $_SESSION['username'] = $username;
-                echo "added";
-                exit();
-                header("Location: /?page=home");
-                exit();
+        } else { 
+            $_SESSION['id'] = $user_id;
+            $_SESSION['username'] = $username;
+            header("Location: /?page=home");
+            exit();
         }
 
     }
