@@ -1,5 +1,6 @@
 <?php
 
+session_name('bm');
 session_start();
 
 if (isset($_GET['page']) && $_GET['page'] == 'login') {

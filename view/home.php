@@ -15,6 +15,7 @@ render('header', $header_values);
 <p><?php echo "EMAIL: {$user['email']}" ?></p>
 <p><?php echo "ROLE: {$user['role']}" ?></p>
 
+<p><a href="/?page=logout">LOGOUT</a></p>
 <p><a href="/?page=kill">KILL</a></p>
 
 <?php

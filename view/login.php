@@ -32,7 +32,7 @@ render('header', $header_values);
             <?php echo isset($errors['password']) ? $errors['password'] : '' ?>
             <br />
 
-            <input type='submit' value='Register'>
+            <input type='submit' value='Log In'>
         </form>
     </div>
 
