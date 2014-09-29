@@ -2,6 +2,10 @@
 
 session_start();
 
+if ($_GET['page'] == 'login') {
+
+}
+
 if (isset($_GET['page']) && $_GET['page'] == 'kill') {
     session_destroy();
     header("Location: /");

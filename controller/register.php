@@ -31,44 +31,59 @@ if (isset($_POST['username'],
     // Check username
     if (empty($username)) {
         // Empty username
-        $errors[] = "Please enter a username";
+        $errors['username'] = "Please enter a username";
     } else if (strlen($username) < 6) {
         // Invalid username
-        $errors[] = "Username must be at least 6 characters";
+        $errors['username'] = "Username must be at least 6 characters";
     } else if (preg_match('/^[a-z0-9][a-z0-9_-]{5,32}$/', $username) == 0) {
-        $errors[] = "Invalid username";
+        $errors['username'] = "Invalid username";
+    }
+
+    // Check email
+    if (empty($email)) {
+        // Empty email
+        $errors['email'] = "Please enter an email";
     }
 
     // Check password
     if (empty($password)) {
-        $errors[] = "Please enter a password";
+        $errors['password'] = "Please enter a password";
     } else if (empty($verify)) {
-        $errors[] = "Please verify your password";
+        $errors['verify'] = "Please verify your password";
     } else if ($password !== $verify) {
-        $errors[] = "Passwords do not match";
+        $errors['password'] = "Passwords do not match";
     }
 
     // Check errors
     if (empty($errors)) {
-        // No errors add to database
+        // Check DB for existing username and email
         $user_id = add_user($username, $email, $password); 
-        if ($user_id != false) {
-            $_SESSION['id'] = $user_id;
-            $_SESSION['username'] = $username;
-            header("Location: /?page=home");
+
+        echo "user id: ";
+        print_r($user_id);
+
+        if ($user_id == FALSE) {
+            echo "Failed to add user";
             exit();
-        } else {
-            echo "failed to add";
-            exit();
+        } 
+        if (isset($user_id['username']) && $user_id['username'] == TRUE) {
+            $errors['username'] = "username exists";
+        } 
+        if (isset($user_id['email']) && $user_id['email'] == TRUE) {
+            $errors['email'] = "email exists";
         }
 
-        
-    } else {
-        // Error in form.  Display error.
-        foreach ($errors as $error) {
-            echo "<p>$error</p>";
+        if (empty($errors)) {
+                $_SESSION['id'] = $user_id;
+                $_SESSION['username'] = $username;
+                echo "added";
+                exit();
+                header("Location: /?page=home");
+                exit();
         }
+
     }
+        
 }
 
 
@@ -80,7 +95,8 @@ $_SESSION['form_token'] = $form_token;
 $template_values = array(
     'username' => $username,
     'email' => $email,
-    'form_token' => $form_token
+    'form_token' => $form_token,
+    'errors' => $errors
 );
 
 render('register', $template_values);

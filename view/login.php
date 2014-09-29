@@ -3,14 +3,14 @@
 require_once('../includes/helper.php');
 
 $header_values = array(
-    'title' => 'REGISTER'
+    'title' => 'LOGIN'
 );
 
 render('header', $header_values);
 ?>
 
 <div class="heading">
-    <h1>REGISTER</h1>
+    <h1>LOGIN</h1>
 </div>
 
 <div class="form-container">
@@ -24,22 +24,10 @@ render('header', $header_values);
         <?php echo isset($errors['username']) ? $errors['username'] : '' ?>
         <br />
 
-        <!-- EMAIL -->
-        email
-        <input type='text' name='email' value='<?php echo !empty($email) ? $email : '' ?>'>
-        <?php echo isset($errors['email']) ? $errors['email'] : '' ?>
-        <br />
-
         <!-- PASSWORD -->
         password
         <input type='password' name='password'>
         <?php echo isset($errors['password']) ? $errors['password'] : '' ?>
-        <br />
-
-        <!-- VERIFY PASSWORD -->
-        verify password
-        <input type='password' name='verify'>
-        <?php echo isset($errors['verify']) ? $errors['verify'] : '' ?>
         <br />
 
         <input type='submit' value='Register'>
